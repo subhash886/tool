@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Free online tools to compress images, convert Word/Excel to PDF, and more. Fast, secure, and SEO optimized.">
+  <meta name="keywords" content="image compressor, pdf converter, word to pdf, excel to pdf, compress images, online tools">
+  <meta name="author" content="YourName">
+  <title>Online Image Compressor & PDF Converter Tools</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Top Ad -->
+  <div class="w-full text-center my-4">
+    <!-- Replace with your AdSense code -->
+    <div class="bg-gray-200 p-4 rounded">[Top Ad Space]</div>
+  </div>
+
+  <div class="max-w-4xl mx-auto px-4 py-6 bg-white shadow-md rounded-xl">
+    <h1 class="text-3xl font-bold text-center mb-6">All-in-One File Converter & Image Compressor</h1>
+    
+    <!-- Image Compressor -->
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-2">Compress Image</h2>
+      <input type="file" id="imageInput" accept="image/*" class="mb-2"/>
+      <input type="range" id="quality" min="10" max="100" value="70" class="w-full mb-2">
+      <button onclick="compressImage()" class="bg-blue-600 text-white px-4 py-2 rounded">Compress</button>
+      <a id="downloadLink" class="block mt-2 text-blue-500 hidden" download="compressed.jpg">Download Compressed Image</a>
+    </section>
+
+    <!-- PDF Converter -->
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-2">Convert File to PDF</h2>
+      <input type="file" id="pdfInput" accept=".doc,.docx,.xls,.xlsx,.txt" class="mb-2"/>
+      <button onclick="convertToPDF()" class="bg-green-600 text-white px-4 py-2 rounded">Convert to PDF</button>
+    </section>
+
+    <!-- Word to PDF -->
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-2">Word to PDF</h2>
+      <input type="file" accept=".doc,.docx" class="mb-2" id="wordInput">
+      <button class="bg-indigo-600 text-white px-4 py-2 rounded" onclick="convertWordToPDF()">Convert</button>
+    </section>
+
+    <!-- Excel to PDF -->
+    <section>
+      <h2 class="text-xl font-semibold mb-2">Excel to PDF</h2>
+      <input type="file" accept=".xls,.xlsx" class="mb-2" id="excelInput">
+      <button class="bg-yellow-500 text-white px-4 py-2 rounded" onclick="convertExcelToPDF()">Convert</button>
+    </section>
+  </div>
+
+  <!-- Bottom Ad -->
+  <div class="w-full text-center my-6">
+    <!-- Replace with your AdSense code -->
+    <div class="bg-gray-200 p-4 rounded">[Bottom Ad Space]</div>
+  </div>
+
+  <script>
+    // Image Compressor Logic
+    function compressImage() {
+      const fileInput = document.getElementById('imageInput');
+      const quality = document.getElementById('quality').value;
+      const downloadLink = document.getElementById('downloadLink');
+
+      if (fileInput.files.length === 0) return alert('Please select an image');
+
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (event) {
+        const img = new Image();
+        img.onload = function () {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+
+          canvas.toBlob(
+            function (blob) {
+              const url = URL.createObjectURL(blob);
+              downloadLink.href = url;
+              downloadLink.classList.remove('hidden');
+            },
+            'image/jpeg',
+            quality / 100
+          );
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Dummy Conversion Functions
+    function convertToPDF() {
+      alert("This requires server-side processing or PDF library integration.");
+    }
+
+    function convertWordToPDF() {
+      alert("Word to PDF conversion needs backend processing (e.g. LibreOffice or API).");
+    }
+
+    function convertExcelToPDF() {
+      alert("Excel to PDF conversion needs backend or third-party API integration.");
+    }
+  </script>
+</body>
+</html>
